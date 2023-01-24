@@ -7,8 +7,8 @@ const secret= process.env.SECRET_PASSWORD;
 
 let blackList=[]
 const authMiddleware=async(req,res,next)=>{
-    // let token=req.body.headers["authorization"]
-    let token=req.headers["authorization"]
+     let token=req.body.headers["authorization"]
+    //let token=req.headers["authorization"]
 
     console.log(req)
     if(!token){
