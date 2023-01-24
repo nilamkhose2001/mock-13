@@ -58,6 +58,9 @@ app.post("/",async(req,res)=>{
 
 app.get("/myJobs",async(req,res)=>{
     try{
+        if(req.role!="admin"){
+            return res.send({message:"You are not admin"})
+        }
         let jobs=await Job.find({userId:req.userId})
         return res.send({data:jobs})
     }
@@ -70,6 +73,9 @@ app.delete("/:id",async(req,res)=>{
     let id=req.params.id
     console.log(id)
     try{
+        if(req.role!="admin"){
+            return res.send({message:"You have not access to delete job"})
+        }
         await Job.findByIdAndDelete(id)
         return res.send({message:"Job deleted successfully"})
     }
