@@ -37,6 +37,39 @@ const authMiddleware=async(req,res,next)=>{
 }
 
 
+app.get("/",async(req,res)=>{
+    let {location,contract}=req.query
+    try{
+        if(location&&contract)
+        {
+            let job=Job.find({location:location,contract:contract})
+            return res.send({message:"success",data:job})
+
+        }
+        else if(contract)
+        {
+            let job=Job.find({contract:contract})
+            return res.send({message:"success",data:job})
+
+        }
+        else if(location)
+        {
+            let job=Job.find({location:location})
+            return res.send({message:"success",data:job})
+
+        }
+        else{
+            let job=await Job.find()
+        return res.send({message:"success",data:job})
+        }
+        
+
+    }catch(e){
+        return res.send({message:e.message})
+    }
+})
+
+
 app.use(authMiddleware)
 
 
@@ -84,37 +117,6 @@ app.delete("/:id",async(req,res)=>{
     }
 })
 
-app.get("/",async(req,res)=>{
-    let {location,contract}=req.query
-    try{
-        if(location&&contract)
-        {
-            let job=Job.find({location:location,contract:contract})
-            return res.send({message:"success",data:job})
-
-        }
-        else if(contract)
-        {
-            let job=Job.find({contract:contract})
-            return res.send({message:"success",data:job})
-
-        }
-        else if(location)
-        {
-            let job=Job.find({location:location})
-            return res.send({message:"success",data:job})
-
-        }
-        else{
-            let job=await Job.find()
-        return res.send({message:"success",data:job})
-        }
-        
-
-    }catch(e){
-        return res.send({message:e.message})
-    }
-})
 
 
 
