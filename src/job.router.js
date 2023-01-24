@@ -68,6 +68,19 @@ app.get("/",async(req,res)=>{
         return res.send({message:e.message})
     }
 })
+app.delete("/:id",async(req,res)=>{
+
+    let id=req.params.id
+    console.log(id)
+    try{
+        
+        await Job.findByIdAndDelete(id)
+        return res.send({message:"Job deleted successfully"})
+    }
+    catch(e){
+        return res.send({message:e.message})
+    }
+})
 
 
 app.use(authMiddleware)
@@ -99,21 +112,6 @@ app.get("/myJobs",async(req,res)=>{
     }
     catch(e){
         return res.send({message:err})
-    }
-})
-app.delete("/:id",async(req,res)=>{
-
-    let id=req.params.id
-    console.log(id)
-    try{
-        if(req.role!="admin"){
-            return res.send({message:"You have not access to delete job"})
-        }
-        await Job.findByIdAndDelete(id)
-        return res.send({message:"Job deleted successfully"})
-    }
-    catch(e){
-        return res.send({message:e.message})
     }
 })
 
