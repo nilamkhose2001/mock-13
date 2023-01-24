@@ -41,7 +41,7 @@ app.use(authMiddleware)
 
 
 app.post("/",async(req,res)=>{
-    let {company,position,contract,location}=req.body
+    let {company,position,contract,location}=req.body.body
     console.log(req.userId)
     try{
         if(req.role!="admin"){
